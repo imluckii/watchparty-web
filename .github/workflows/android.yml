@@ -1,0 +1,83 @@
+name: Android APK
+
+on:
+  push:
+    branches: [development, main]
+  pull_request:
+    branches: [development, main]
+  workflow_dispatch:
+
+concurrency:
+  group: android-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.8.0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install web dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build web bundle
+        run: pnpm build
+        env:
+          SERVICE_WORKER_DISABLED: "true"
+          WATCHPARTY_STREAMING_SERVER_URL: "http://127.0.0.1:11471/"
+
+      - name: Prepare Android assets
+        run: node scripts/prepare-android.mjs
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - uses: android-actions/setup-android@v3
+
+      - name: Install SDK packages
+        run: sdkmanager --install "platforms;android-36" "build-tools;36.0.0"
+
+      - name: Assemble release APK
+        working-directory: android
+        run: ./gradlew assembleRelease --no-daemon --stacktrace
+
+      - name: Collect APK
+        run: |
+          mkdir -p out
+          cp android/app/build/outputs/apk/release/app-release.apk "out/watchparty-${GITHUB_SHA::7}.apk"
+          cp android/app/build/outputs/apk/release/app-release.apk out/watchparty.apk
+          ls -lh out
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: watchparty-apk
+          path: out/watchparty*.apk
+          if-no-files-found: error
+
+      - name: Publish rolling release
+        if: github.event_name == 'push'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if ! gh release view android-latest >/dev/null 2>&1; then
+            gh release create android-latest \
+              --title "Watchparty Android (rolling)" \
+              --notes "Newest shell build. Signed with the keystore committed in android/keystore." \
+              --prerelease
+          fi
+          gh release upload android-latest out/watchparty.apk --clobber

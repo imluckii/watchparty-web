@@ -113,7 +113,10 @@ const SearchParamsHandler = () => {
         }
 
         if (loopback(parsed)) {
-            apply(normalized, { save: true, notify: true });
+            // The Android shell passes its own origin here on every launch; announcing it
+            // with a toast over the app the user just opened would be noise.
+            const sameOrigin = parsed.origin === window.location.origin;
+            apply(normalized, { save: true, notify: !sameOrigin });
             return;
         }
 

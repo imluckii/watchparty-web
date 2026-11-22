@@ -36,6 +36,12 @@ const Board = () => {
         (continueWatchingPreview.items.length > 0 ? 1 : 0) +
         (liveTvCatalog.items.length > 0 ? 1 : 0);
     const showStreamingServerWarning = React.useMemo(() => {
+        // The Android shell ships its own setup screen for a missing engine, in the app's
+        // own voice and with a launch-Stremio button; this web banner would just duplicate
+        // it in the wrong styling.
+        if (process.env.WATCHPARTY_STREAMING_SERVER_URL) {
+            return false;
+        }
         return streamingServer.settings !== null && streamingServer.settings.type === 'Err' && (
             isNaN(profile.settings.streamingServerWarningDismissed.getTime()) ||
             profile.settings.streamingServerWarningDismissed.getTime() < Date.now());

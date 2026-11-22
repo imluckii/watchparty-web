@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bg">#FF0C0B14</color>
+    <color name="surface">#FF171528</color>
+    <color name="surface_raised">#FF1E1B33</color>
+    <color name="hairline">#FF2A2843</color>
+    <color name="text_primary">#FFEDEAF7</color>
+    <color name="text_secondary">#FFA9A3C2</color>
+    <color name="accent">#FF8F7CFF</color>
+    <color name="accent_pressed">#FF7A66F0</color>
+    <color name="scrim">#F20C0B14</color>
+</resources>

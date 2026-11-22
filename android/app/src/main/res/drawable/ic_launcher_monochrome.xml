@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Watchparty monochrome (Android 13+ themed icon): pure-white silhouette of the same mark.
+     Geometry matches ic_launcher_foreground exactly so the ring/dots/triangle align. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Art is nudged 10% outward from the safe-zone design so the mark reads at
+         launcher sizes; still inside the 72dp mask. -->
+    <group
+        android:pivotX="54"
+        android:pivotY="54"
+        android:scaleX="1.1"
+        android:scaleY="1.1">
+        <!-- Open ring -->
+        <path
+            android:pathData="M70.06,31.06 A28,28 0 1 1 37.94,31.06"
+            android:strokeColor="#FFFFFF"
+            android:strokeWidth="7"
+            android:strokeLineCap="round"
+            android:fillColor="#00000000"/>
+
+        <!-- Viewer dot, right -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M60.3,26.72 m-4.5,0 a4.5,4.5 0 1 1 9,0 a4.5,4.5 0 1 1 -9,0"/>
+
+        <!-- Viewer dot, left -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M47.7,26.72 m-4.5,0 a4.5,4.5 0 1 1 9,0 a4.5,4.5 0 1 1 -9,0"/>
+
+        <!-- Play triangle -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:strokeColor="#FFFFFF"
+            android:strokeWidth="2.5"
+            android:strokeLineJoin="round"
+            android:pathData="M45.5,40.5 L69.5,54 L45.5,67.5 Z"/>
+    </group>
+</vector>

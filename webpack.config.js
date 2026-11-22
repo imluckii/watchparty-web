@@ -220,6 +220,7 @@ module.exports = (env, argv) => ({
             SENTRY_DSN: null,
             ...env,
             SERVICE_WORKER_DISABLED: false,
+            WATCHPARTY_STREAMING_SERVER_URL: null,
             DEBUG: argv.mode !== 'production',
             VERSION: packageJson.version,
             COMMIT_HASH

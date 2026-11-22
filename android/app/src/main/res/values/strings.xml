@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Watchparty</string>
+
+    <string name="setup_headline">Stremio engine not found</string>
+    <string name="setup_body">Watchparty plays through the streaming engine that ships with the Stremio app on this phone. Install or open Stremio once, then come back.</string>
+    <string name="setup_primary">Open Stremio</string>
+    <string name="setup_secondary">Check again</string>
+    <string name="setup_skip">Browse without playback</string>
+    <string name="setup_checking">Checking for the engine…</string>
+    <string name="engine_running">Engine found — reloading</string>
+</resources>
